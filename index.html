@@ -11,6 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
@@ -31,9 +32,9 @@
     .glass { backdrop-filter: blur(8px); background: rgba(255,255,255,0.75); }
   </style>
 </head>
-<body class="min-h-screen bg-neutral-50 text-neutral-900">
+<body class="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100">
   <!-- HEADER / NAV -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-200">
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-neutral-900/80 backdrop-blur border-b border-neutral-200 dark:border-neutral-800">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="h-10 w-10 rounded-xl bg-brand-600 text-white grid place-items-center font-extrabold">HG</div>
@@ -43,8 +44,9 @@
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <button id="langToggle" class="px-3 py-2 rounded-xl border border-neutral-300 hover:border-neutral-400 text-sm font-medium">EN / ES</button>
-        <button id="resetBtn" class="px-3 py-2 rounded-xl bg-neutral-900 text-white text-sm font-semibold hover:bg-neutral-800">Reset</button>
+        <button id="themeToggle" class="px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 text-sm font-medium" aria-label="Cambiar tema">🌙 / ☀️</button>
+        <button id="langToggle" class="px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 text-sm font-medium">EN / ES</button>
+        <button id="resetBtn" class="px-3 py-2 rounded-xl bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 text-white text-sm font-semibold hover:bg-neutral-800">Reset</button>
       </div>
     </div>
   </header>
@@ -55,8 +57,8 @@
       <div class="grid md:grid-cols-2 gap-6 items-center">
         <div>
           <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight" id="heroTitle">Clásicos de siempre, con mimo artesano</h2>
-          <p class="mt-3 text-neutral-600" id="heroText">Elige tu hamburguesa, añade o quita ingredientes a tu gusto. Cocina lenta, producto local, pan del día.</p>
-          <ul class="mt-4 text-sm text-neutral-600 list-disc list-inside" id="heroBullets">
+          <p class="mt-3 text-neutral-600 dark:text-neutral-300" id="heroText">Elige tu hamburguesa, añade o quita ingredientes a tu gusto. Cocina lenta, producto local, pan del día.</p>
+          <ul class="mt-4 text-sm text-neutral-600 dark:text-neutral-300 list-disc list-inside" id="heroBullets">
             <li>Carne 160 g · opción <span class="font-semibold">veggie</span></li>
             <li>Pan brioche o sin gluten</li>
             <li>Quita/añade ingredientes en cada hamburguesa</li>
@@ -73,39 +75,78 @@
 
   <!-- CONTENT -->
   <main class="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
-    <div class="grid lg:grid-cols-[1fr,360px] gap-8">
-      <!-- MENU GRID -->
-      <section>
-        <div class="flex items-end justify-between mb-4">
-          <h3 class="text-2xl font-extrabold" id="menuTitle">Nuestra carta</h3>
-          <div class="text-sm text-neutral-500" id="menuHint">Pulsa “Personalizar” para añadir o quitar ingredientes</div>
-        </div>
-        <div id="menuGrid" class="grid sm:grid-cols-2 gap-6"></div>
-      </section>
+    <!-- TABS -->
+    <nav class="mb-6 flex items-center gap-2" role="tablist">
+      <button id="tabMenu" class="px-3 py-2 rounded-xl text-sm font-semibold bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900" data-section="menu">🧾 <span id="tabMenuText">Carta</span></button>
+      <button id="tabFAQ" class="px-3 py-2 rounded-xl text-sm font-semibold border border-neutral-300 dark:border-neutral-700" data-section="faq">❓ <span id="tabFAQText">FAQ</span></button>
+      <button id="tabContact" class="px-3 py-2 rounded-xl text-sm font-semibold border border-neutral-300 dark:border-neutral-700" data-section="contact">📬 <span id="tabContactText">Contáctanos</span></button>
+    </nav>
 
-      <!-- SIDECART -->
-      <aside class="lg:sticky lg:top-20 h-max">
-        <div class="rounded-3xl border border-neutral-200 bg-white shadow-soft p-5">
-          <div class="flex items-center justify-between">
-            <h4 class="font-extrabold text-lg" id="cartTitle">Tu pedido</h4>
-            <button id="clearCart" class="text-sm text-brand-700 hover:underline" aria-label="Vaciar">Vaciar</button>
+    <!-- SECTION: MENU -->
+    <section id="section-menu">
+      <div class="grid lg:grid-cols-[1fr,360px] gap-8">
+        <!-- MENU GRID -->
+        <section>
+          <div class="flex items-end justify-between mb-4">
+            <h3 class="text-2xl font-extrabold" id="menuTitle">Nuestra carta</h3>
+            <div class="text-sm text-neutral-500 dark:text-neutral-400" id="menuHint">Pulsa “Personalizar” para añadir o quitar ingredientes</div>
           </div>
-          <div id="cartEmpty" class="text-neutral-500 text-sm mt-3" aria-live="polite">Aún no has añadido nada.</div>
-          <ul id="cartList" class="divide-y divide-neutral-200 mt-2 hidden"></ul>
-          <div class="mt-4 flex items-center justify-between">
-            <span class="text-sm text-neutral-500" id="cartSubtotalLabel">Subtotal</span>
-            <span class="font-bold" id="cartSubtotal">0,00 €</span>
+          <div id="menuGrid" class="grid sm:grid-cols-2 gap-6"></div>
+        </section>
+
+        <!-- SIDECART -->
+        <aside class="lg:sticky lg:top-20 h-max">
+          <div class="rounded-3xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-soft p-5">
+            <div class="flex items-center justify-between">
+              <h4 class="font-extrabold text-lg" id="cartTitle">Tu pedido</h4>
+              <button id="clearCart" class="text-sm text-brand-700 hover:underline" aria-label="Vaciar">Vaciar</button>
+            </div>
+            <div id="cartEmpty" class="text-neutral-500 dark:text-neutral-400 text-sm mt-3" aria-live="polite">Aún no has añadido nada.</div>
+            <ul id="cartList" class="divide-y divide-neutral-200 dark:divide-neutral-700 mt-2 hidden"></ul>
+            <div class="mt-4 flex items-center justify-between">
+              <span class="text-sm text-neutral-500 dark:text-neutral-400" id="cartSubtotalLabel">Subtotal</span>
+              <span class="font-bold" id="cartSubtotal">0,00 €</span>
+            </div>
+            <button id="checkoutBtn" class="mt-4 w-full py-3 rounded-2xl bg-brand-600 text-white font-semibold hover:bg-brand-700 transition" aria-label="Finalizar">
+              <span id="checkoutText">Finalizar pedido</span>
+            </button>
+            <p class="text-[11px] text-neutral-400 mt-2" id="legal">Precios con IGIC incluido. Fotos orientativas. No se venden bebidas en esta carta.</p>
           </div>
-          <button id="checkoutBtn" class="mt-4 w-full py-3 rounded-2xl bg-brand-600 text-white font-semibold hover:bg-brand-700 transition" aria-label="Finalizar">
-            <span id="checkoutText">Finalizar pedido</span>
-          </button>
-          <p class="text-[11px] text-neutral-400 mt-2" id="legal">Precios con IGIC incluido. Fotos orientativas. No se venden bebidas en esta carta.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SECTION: FAQ -->
+    <section id="section-faq" class="hidden">
+      <div class="rounded-3xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-soft p-6">
+        <h3 class="text-2xl font-extrabold mb-4" id="faqTitle">Preguntas frecuentes</h3>
+        <div id="faqList" class="divide-y divide-neutral-200 dark:divide-neutral-700"></div>
+      </div>
+    </section>
+
+    <!-- SECTION: CONTACT -->
+    <section id="section-contact" class="hidden">
+      <div class="rounded-3xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-soft p-6">
+        <h3 class="text-2xl font-extrabold mb-2" id="contactTitle">Contáctanos</h3>
+        <p class="text-neutral-600 dark:text-neutral-300 mb-4" id="contactSubtitle">Estamos aquí para ayudarte.</p>
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <ul class="space-y-2 text-sm">
+              <li><strong id="lblAddress">Dirección:</strong> <span id="valAddress">Calle Sabores 27, Local 3 · 38400 Puerto de la Cruz, Tenerife</span></li>
+              <li><strong id="lblPhone">Teléfono:</strong> <span id="valPhone">+34 822 123 456</span></li>
+              <li><strong id="lblEmail">Email:</strong> <span id="valEmail">hola@hamburgueseriagourmet.es</span></li>
+              <li><strong id="lblHours">Horario:</strong> <span id="valHours">L–J 13:00–22:00 · V–S 13:00–23:30 · D 13:00–22:30</span></li>
+            </ul>
+          </div>
+          <div>
+            <div class="rounded-2xl border border-dashed border-neutral-300 dark:border-neutral-700 p-4 text-sm text-neutral-600 dark:text-neutral-300" id="contactNote">Para reservas y grupos, indícanos fecha, hora y número de personas. Te responderemos lo antes posible.</div>
+          </div>
         </div>
-      </aside>
-    </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="border-t border-neutral-200 bg-white">
+  <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 text-xs text-neutral-500 flex flex-wrap items-center gap-x-3 gap-y-1">
       <span>© <span id="year"></span> Hamburguesería Gourmet.</span>
       <span aria-hidden>•</span>
@@ -146,7 +187,24 @@
         pieces: 'uds',
         reset: 'Reset',
         clearCart: 'Vaciar',
-        footerNote: 'Hecho con ingredientes reales y cariño tradicional.'
+        footerNote: 'Hecho con ingredientes reales y cariño tradicional.',
+        tabMenu: 'Carta',
+        tabFAQ: 'FAQ',
+        tabContact: 'Contáctanos',
+        faqTitle: 'Preguntas frecuentes',
+        faqs: [
+          { q: '¿Puedo pedir versión vegetariana?', a: 'Sí. Casi todas las hamburguesas tienen opción veggie: sustitución de carne por heura o patty vegetal.' },
+          { q: '¿Tienen pan sin gluten?', a: 'Sí. Indícalo al personal o en la personalización: pan sin gluten disponible.' },
+          { q: '¿El precio cambia al quitar ingredientes?', a: 'Quitar ingredientes base no cambia el precio; los extras sí lo aumentan según su coste.' },
+          { q: '¿Hacen entregas a domicilio?', a: 'De momento solo recogida en local. Pronto activaremos reparto en zona cercana.' }
+        ],
+        contactTitle: 'Contáctanos',
+        contactSubtitle: 'Estamos aquí para ayudarte.',
+        lblAddress: 'Dirección:',
+        lblPhone: 'Teléfono:',
+        lblEmail: 'Email:',
+        lblHours: 'Horario:',
+        contactNote: 'Para reservas y grupos, indícanos fecha, hora y número de personas. Te responderemos lo antes posible.'
       },
       en: {
         subtitle: 'Interactive menu · Food only',
@@ -178,7 +236,24 @@
         pieces: 'pcs',
         reset: 'Reset',
         clearCart: 'Clear',
-        footerNote: 'Made with real ingredients and traditional care.'
+        footerNote: 'Made with real ingredients and traditional care.',
+        tabMenu: 'Menu',
+        tabFAQ: 'FAQ',
+        tabContact: 'Contact us',
+        faqTitle: 'Frequently asked questions',
+        faqs: [
+          { q: 'Can I order a vegetarian option?', a: 'Yes. Most burgers can go veggie by swapping beef for a plant-based patty.' },
+          { q: 'Do you offer gluten-free buns?', a: 'Yes. Choose the gluten-free bun during customization or tell our staff.' },
+          { q: 'Does price change if I remove ingredients?', a: 'Removing base ingredients does not change the price; extras increase it as listed.' },
+          { q: 'Do you deliver?', a: 'Currently pickup only. Local delivery coming soon.' }
+        ],
+        contactTitle: 'Contact us',
+        contactSubtitle: 'We are here to help.',
+        lblAddress: 'Address:',
+        lblPhone: 'Phone:',
+        lblEmail: 'Email:',
+        lblHours: 'Hours:',
+        contactNote: 'For reservations and groups, tell us date, time and party size. We will reply shortly.'
       }
     }
 
@@ -275,11 +350,30 @@
       $('#subtitle').textContent = t.subtitle;
       $('#heroTitle').textContent = t.heroTitle;
       $('#heroText').textContent = t.heroText;
-      const hb = $('#heroBullets');
-      hb.innerHTML = '';
-      t.heroBullets.forEach(b => {
-        const li = document.createElement('li'); li.textContent = b; hb.appendChild(li);
-      });
+      const hb = $('#heroBullets'); hb.innerHTML = ''; t.heroBullets.forEach(b => { const li = document.createElement('li'); li.textContent = b; hb.appendChild(li); });
+      $('#menuTitle').textContent = t.menuTitle;
+      $('#menuHint').textContent = t.menuHint;
+      $('#cartTitle').textContent = t.cartTitle;
+      $('#cartEmpty').textContent = t.cartEmpty;
+      $('#cartSubtotalLabel').textContent = t.cartSubtotalLabel;
+      $('#checkoutText').textContent = t.checkout;
+      $('#legal').textContent = t.legal;
+      $('#resetBtn').textContent = t.reset;
+      $('#clearCart').textContent = t.clearCart;
+      $('#footerNote').textContent = t.footerNote;
+      // Tabs
+      $('#tabMenuText').textContent = t.tabMenu;
+      $('#tabFAQText').textContent = t.tabFAQ;
+      $('#tabContactText').textContent = t.tabContact;
+      // FAQ & Contact headings
+      $('#faqTitle').textContent = t.faqTitle;
+      $('#contactTitle').textContent = t.contactTitle;
+      $('#contactSubtitle').textContent = t.contactSubtitle;
+      $('#lblAddress').textContent = t.lblAddress; $('#lblPhone').textContent = t.lblPhone; $('#lblEmail').textContent = t.lblEmail; $('#lblHours').textContent = t.lblHours;
+      $('#contactNote').textContent = t.contactNote;
+      // Re-render FAQ list with language
+      renderFAQ();
+    });
       $('#menuTitle').textContent = t.menuTitle;
       $('#menuHint').textContent = t.menuHint;
       $('#cartTitle').textContent = t.cartTitle;
@@ -299,7 +393,7 @@
 
       BURGERS.forEach(b => {
         const card = document.createElement('article');
-        card.className = 'rounded-3xl border border-neutral-200 bg-white shadow-soft overflow-hidden flex flex-col';
+        card.className = 'rounded-3xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-soft overflow-hidden flex flex-col';
         card.innerHTML = `
           <div class="p-5">
             <div class="flex items-start justify-between gap-3">
@@ -497,7 +591,110 @@
         alert((state.lang === 'es' ? 'Resumen de pedido' : 'Order summary') + '\n\n' + lines + `\n\n${t.cartSubtotalLabel}: ${$('#cartSubtotal').textContent}`);
       });
     });
+      
+    function renderFAQ() {
+      const list = $('#faqList');
+      if (!list) return;
+      const t = i18n[state.lang];
+      list.innerHTML = '';
+      t.faqs.forEach(({q,a}, idx) => {
+        const item = document.createElement('div');
+        item.className = 'py-3';
+        item.innerHTML = `
+          <button class="w-full text-left flex items-center justify-between gap-3 font-semibold" aria-expanded="false" data-acc="${idx}">
+            <span>${q}</span>
+            <span>▾</span>
+          </button>
+          <div class="mt-2 hidden text-sm text-neutral-600 dark:text-neutral-300" data-panel="${idx}">${a}</div>
+        `;
+        list.appendChild(item);
+      });
+      $$('#faqList [data-acc]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.currentTarget.getAttribute('data-acc');
+          const panel = $(`#faqList [data-panel="${id}"]`);
+          panel.classList.toggle('hidden');
+          const exp = e.currentTarget.getAttribute('aria-expanded') === 'true';
+          e.currentTarget.setAttribute('aria-expanded', String(!exp));
+        });
+      });
+    }
+
+    function setActiveSection(key) {
+      const sections = ['menu','faq','contact'];
+      sections.forEach(s => {
+        $('#section-' + s).classList.toggle('hidden', s !== key);
+      });
+      // Tab styles
+      $('#tabMenu').classList.toggle('bg-neutral-900', key==='menu');
+      $('#tabMenu').classList.toggle('text-white', key==='menu');
+      $('#tabMenu').classList.toggle('dark:bg-neutral-100', key==='menu');
+      $('#tabMenu').classList.toggle('dark:text-neutral-900', key==='menu');
+
+      ['FAQ','Contact'].forEach(name => {
+        const id = name === 'FAQ' ? 'tabFAQ' : 'tabContact';
+        const active = (name==='FAQ' && key==='faq') || (name==='Contact' && key==='contact');
+        const el = $('#' + id);
+        el.classList.toggle('bg-neutral-900', active);
+        el.classList.toggle('text-white', active);
+        el.classList.toggle('dark:bg-neutral-100', active);
+        el.classList.toggle('dark:text-neutral-900', active);
+        el.classList.toggle('border', !active);
+      });
+    }
+
+    // Theme utilities
+    function applyTheme(theme) {
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
+    }
+    function initTheme() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      applyTheme(theme);
+    }
+
+    // ===== Init (extended) =====
+    document.addEventListener('DOMContentLoaded', () => {
+      $('#year').textContent = new Date().getFullYear();
+      initTheme();
+      renderStaticText();
+      renderMenu();
+      renderCart();
+      renderFAQ();
+
+      // tab handlers
+      $('#tabMenu').addEventListener('click', () => setActiveSection('menu'));
+      $('#tabFAQ').addEventListener('click', () => setActiveSection('faq'));
+      $('#tabContact').addEventListener('click', () => setActiveSection('contact'));
+      setActiveSection('menu');
+
+      // language
+      $('#langToggle').addEventListener('click', () => setLang(state.lang === 'es' ? 'en' : 'es'));
+      // theme toggle
+      $('#themeToggle').addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+
+      $('#resetBtn').addEventListener('click', () => { localStorage.clear(); location.reload(); });
+      $('#clearCart').addEventListener('click', () => { state.cart = []; renderCart(); });
+      $('#checkoutBtn').addEventListener('click', () => {
+        const t = i18n[state.lang];
+        if (state.cart.length === 0) return alert(state.lang === 'es' ? 'Tu pedido está vacío.' : 'Your order is empty.');
+        const lines = state.cart.map((it, i) => `${i+1}. ${it.name} → ${fmt(it.price)}
+  - ${t.base}: ${it.base.join(', ') || '—'}
+  - ${t.extras}: ${it.extras.join(', ') || '—'}`).join('
+
+');
+        alert((state.lang === 'es' ? 'Resumen de pedido' : 'Order summary') + '
+
+' + lines + `
+
+${t.cartSubtotalLabel}: ${$('#cartSubtotal').textContent}`);
+      });
+    });
   </script>
 </body>
 </html>
- 
