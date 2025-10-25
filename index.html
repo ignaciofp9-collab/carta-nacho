@@ -45,7 +45,12 @@
       </div>
       <div class="flex items-center gap-2">
         <button id="themeToggle" class="px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 text-sm font-medium" aria-label="Cambiar tema">🌙 / ☀️</button>
-        <button id="langToggle" class="px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 text-sm font-medium">EN / ES</button>
+        <label for="langSelect" id="langSelectLabel" class="sr-only">Idioma</label>
+        <select id="langSelect" class="px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-400" aria-label="Seleccionar idioma">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+          <option value="th">ไทย</option>
+        </select>
         <button id="resetBtn" class="px-3 py-2 rounded-xl bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 text-white text-sm font-semibold hover:bg-neutral-800">Reset</button>
       </div>
     </div>
@@ -138,8 +143,17 @@
               <li><strong id="lblHours">Horario:</strong> <span id="valHours">L–J 13:00–22:00 · V–S 13:00–23:30 · D 13:00–22:30</span></li>
             </ul>
           </div>
-          <div>
+          <div class="space-y-4">
             <div class="rounded-2xl border border-dashed border-neutral-300 dark:border-neutral-700 p-4 text-sm text-neutral-600 dark:text-neutral-300" id="contactNote">Para reservas y grupos, indícanos fecha, hora y número de personas. Te responderemos lo antes posible.</div>
+            <div class="rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-900/60 p-4">
+              <h4 class="font-semibold text-neutral-900 dark:text-neutral-100" id="faxTitle">Fax gourmet</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-300 mt-1" id="faxSubtitle">Para quienes disfrutan del encanto analógico.</p>
+              <ul class="mt-3 space-y-1 text-sm">
+                <li><strong id="lblFax">Fax:</strong> <span id="valFax">+34 822 654 321</span></li>
+                <li><strong id="lblFaxHours">Horario fax:</strong> <span id="valFaxHours">24/7 con desvío automático</span></li>
+              </ul>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-3" id="faxNote">Procesamos los pedidos recibidos por fax cada hora y confirmamos por teléfono.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -204,7 +218,19 @@
         lblPhone: 'Teléfono:',
         lblEmail: 'Email:',
         lblHours: 'Horario:',
-        contactNote: 'Para reservas y grupos, indícanos fecha, hora y número de personas. Te responderemos lo antes posible.'
+        contactNote: 'Para reservas y grupos, indícanos fecha, hora y número de personas. Te responderemos lo antes posible.',
+        themeToggle: 'Cambiar tema',
+        themeLight: 'Modo claro',
+        themeDark: 'Modo oscuro',
+        langSelectLabel: 'Seleccionar idioma',
+        faxTitle: 'Fax gourmet',
+        faxSubtitle: 'Para quienes disfrutan del encanto analógico.',
+        lblFax: 'Fax:',
+        lblFaxHours: 'Horario fax:',
+        faxNote: 'Procesamos los pedidos recibidos por fax cada hora y confirmamos por teléfono.',
+        faxHoursValue: '24/7 con desvío automático',
+        orderSummaryTitle: 'Resumen de pedido',
+        emptyCartAlert: 'Tu pedido está vacío.'
       },
       en: {
         subtitle: 'Interactive menu · Food only',
@@ -253,16 +279,93 @@
         lblPhone: 'Phone:',
         lblEmail: 'Email:',
         lblHours: 'Hours:',
-        contactNote: 'For reservations and groups, tell us date, time and party size. We will reply shortly.'
+        contactNote: 'For reservations and groups, tell us date, time and party size. We will reply shortly.',
+        themeToggle: 'Toggle theme',
+        themeLight: 'Light mode',
+        themeDark: 'Dark mode',
+        langSelectLabel: 'Select language',
+        faxTitle: 'Gourmet fax',
+        faxSubtitle: 'For anyone who loves analogue charm.',
+        lblFax: 'Fax:',
+        lblFaxHours: 'Fax hours:',
+        faxNote: 'We review faxed orders every hour and confirm by phone.',
+        faxHoursValue: '24/7 with auto forwarding',
+        orderSummaryTitle: 'Order summary',
+        emptyCartAlert: 'Your order is empty.'
+      },
+      th: {
+        subtitle: 'เมนูอินเทอร์แอคทีฟ · เฉพาะอาหาร',
+        heroTitle: 'คลาสสิกเหนือกาลเวลา ปรุงอย่างพิถีพิถัน',
+        heroText: 'เลือกเบอร์เกอร์ของคุณ เพิ่มหรือลดส่วนผสมได้ตามใจ สโลว์คุกกิง วัตถุดิบท้องถิ่น ขนมปังอบสดใหม่ทุกวัน.',
+        heroBullets: [
+          'เนื้อวัว 160 กรัม · มีตัวเลือกมังสวิรัติ',
+          'ขนมปังบริยอชหรือปราศจากกลูเตน',
+          'ปรับส่วนผสมของแต่ละเบอร์เกอร์ได้'
+        ],
+        menuTitle: 'เมนูของเรา',
+        menuHint: 'กด “ปรับแต่ง” เพื่อเพิ่มหรือลดส่วนผสม',
+        customize: 'ปรับแต่ง',
+        remove: 'นำออก',
+        include: 'คงไว้',
+        extras: 'ท็อปปิ้งพิเศษ',
+        base: 'ส่วนผสมหลัก',
+        addToCart: 'เพิ่มในคำสั่ง',
+        added: 'เพิ่มแล้ว',
+        cartTitle: 'คำสั่งของคุณ',
+        cartEmpty: 'คุณยังไม่ได้เพิ่มอะไรเลย.',
+        cartSubtotalLabel: 'ยอดรวม',
+        checkout: 'ชำระเงิน',
+        legal: 'ราคารวมภาษีแล้ว ภาพเพื่อการประกอบเท่านั้น เมนูนี้ไม่มีเครื่องดื่ม.',
+        veggieLabel: 'มีตัวเลือกมังสวิรัติ',
+        glutenFree: 'ขนมปังปราศจากกลูเตน',
+        brioche: 'ขนมปังบริยอช',
+        qty: 'จำนวน',
+        pieces: 'ชิ้น',
+        reset: 'รีเซ็ต',
+        clearCart: 'ล้าง',
+        footerNote: 'รังสรรค์จากวัตถุดิบจริงและความใส่ใจแบบดั้งเดิม.',
+        tabMenu: 'เมนู',
+        tabFAQ: 'คำถามที่พบบ่อย',
+        tabContact: 'ติดต่อเรา',
+        faqTitle: 'คำถามที่พบบ่อย',
+        faqs: [
+          { q: 'สามารถสั่งแบบมังสวิรัติได้ไหม?', a: 'ได้ค่ะ เกือบทุกเมนูสามารถเปลี่ยนเป็นแพตตีโปรตีนจากพืชแทนเนื้อวัวได้.' },
+          { q: 'มีขนมปังปลอดกลูเตนไหม?', a: 'มีค่ะ เลือกในขั้นตอนการปรับแต่งหรือแจ้งพนักงานของเราได้เลย.' },
+          { q: 'ราคาจะเปลี่ยนไหมถ้านำส่วนผสมออก?', a: 'การนำส่วนผสมพื้นฐานออกไม่กระทบราคา ส่วนท็อปปิ้งพิเศษจะคิดเพิ่มตามที่ระบุ.' },
+          { q: 'มีบริการส่งถึงบ้านหรือเปล่า?', a: 'ตอนนี้ให้บริการรับหน้าร้านเท่านั้น กำลังเตรียมบริการส่งในพื้นที่ใกล้เคียง.' }
+        ],
+        contactTitle: 'ติดต่อเรา',
+        contactSubtitle: 'เราพร้อมช่วยเหลือคุณเสมอ.',
+        lblAddress: 'ที่อยู่:',
+        lblPhone: 'โทรศัพท์:',
+        lblEmail: 'อีเมล:',
+        lblHours: 'เวลาเปิดทำการ:',
+        contactNote: 'สำหรับการจองและกลุ่มใหญ่ โปรดแจ้งวัน เวลา และจำนวนคน แล้วเราจะติดต่อกลับโดยเร็ว.',
+        themeToggle: 'สลับธีม',
+        themeLight: 'โหมดสว่าง',
+        themeDark: 'โหมดมืด',
+        langSelectLabel: 'เลือกภาษา',
+        faxTitle: 'แฟกซ์กูร์เมต์',
+        faxSubtitle: 'สำหรับคนที่ชอบเสน่ห์แบบอนาล็อก.',
+        lblFax: 'แฟกซ์:',
+        lblFaxHours: 'เวลารับแฟกซ์:',
+        faxNote: 'เราตรวจแฟกซ์ทุกชั่วโมงและยืนยันกลับทางโทรศัพท์.',
+        faxHoursValue: 'เปิดรับตลอด 24 ชั่วโมง พร้อมโอนสายอัตโนมัติ',
+        orderSummaryTitle: 'สรุปคำสั่งซื้อ',
+        emptyCartAlert: 'คำสั่งซื้อของคุณยังว่างอยู่.'
       }
-    }
+    };
 
     // ===== Data (8 burgers) =====
     const BURGERS = [
       {
         id: 'hb1',
-        name: { es: 'Clásica', en: 'Classic' },
-        desc: { es: 'Carne 160 g, queso cheddar, lechuga, tomate, cebolla, salsa de la casa.', en: '160 g beef, cheddar, lettuce, tomato, onion, house sauce.' },
+        name: { es: 'Clásica', en: 'Classic', th: 'คลาสสิก' },
+        desc: {
+          es: 'Carne 160 g, queso cheddar, lechuga, tomate, cebolla, salsa de la casa.',
+          en: '160 g beef, cheddar, lettuce, tomato, onion, house sauce.',
+          th: 'เนื้อวัว 160 กรัม ชีสเชดดาร์ ผักกาด มะเขือเทศ หัวหอม และซอสโฮมเมด.'
+        },
         price: 8.9,
         base: ['cheddar','lechuga','tomate','cebolla','salsa de la casa'],
         extras: [ ['bacon',1.2], ['doble cheddar',1.0], ['huevo',1.1], ['pepino',0.5] ],
@@ -270,8 +373,12 @@
       },
       {
         id: 'hb2',
-        name: { es: 'BBQ Ahumada', en: 'Smoky BBQ' },
-        desc: { es: 'Carne 160 g, bacon, cheddar, cebolla crispy y salsa BBQ.', en: '160 g beef, bacon, cheddar, crispy onions & BBQ.' },
+        name: { es: 'BBQ Ahumada', en: 'Smoky BBQ', th: 'สโมกกี้ บีบีคิว' },
+        desc: {
+          es: 'Carne 160 g, bacon, cheddar, cebolla crispy y salsa BBQ.',
+          en: '160 g beef, bacon, cheddar, crispy onions & BBQ.',
+          th: 'เนื้อวัว 160 กรัม เบคอน เชดดาร์ หัวหอมกรอบ และซอสบาร์บีคิว.'
+        },
         price: 10.5,
         base: ['bacon','cheddar','cebolla crispy','salsa BBQ'],
         extras: [ ['doble carne',2.5], ['jalapeños',0.6], ['queso gouda',0.9] ],
@@ -279,8 +386,12 @@
       },
       {
         id: 'hb3',
-        name: { es: 'Trufa & Brie', en: 'Truffle & Brie' },
-        desc: { es: 'Carne 160 g, brie, champiñón salteado, rúcula, mayo trufada.', en: '160 g beef, brie, sautéed mushrooms, arugula, truffle mayo.' },
+        name: { es: 'Trufa & Brie', en: 'Truffle & Brie', th: 'ทรัฟเฟิล & บรี' },
+        desc: {
+          es: 'Carne 160 g, brie, champiñón salteado, rúcula, mayo trufada.',
+          en: '160 g beef, brie, sautéed mushrooms, arugula, truffle mayo.',
+          th: 'เนื้อวัว 160 กรัม ชีสบรี เห็ดผัด ร็อกเก็ต และมายองเนสกลิ่นทรัฟเฟิล.'
+        },
         price: 12.8,
         base: ['brie','champiñón','rúcula','mayo trufada'],
         extras: [ ['cebolla caramelizada',0.8], ['doble brie',1.4] ],
@@ -288,8 +399,12 @@
       },
       {
         id: 'hb4',
-        name: { es: 'Pico de Gallo', en: 'Pico de Gallo' },
-        desc: { es: 'Carne 160 g, cheddar, pico de gallo, jalapeños, cilantro.', en: '160 g beef, cheddar, pico de gallo, jalapeños, cilantro.' },
+        name: { es: 'Pico de Gallo', en: 'Pico de Gallo', th: 'ปิโก เด กัลโล' },
+        desc: {
+          es: 'Carne 160 g, cheddar, pico de gallo, jalapeños, cilantro.',
+          en: '160 g beef, cheddar, pico de gallo, jalapeños, cilantro.',
+          th: 'เนื้อวัว 160 กรัม เชดดาร์ พิโก เด กัลโล ฮาลาเปญโญ่ และผักชี.'
+        },
         price: 11.2,
         base: ['cheddar','pico de gallo','jalapeños','cilantro'],
         extras: [ ['guacamole',1.3], ['nachos crujientes',0.7] ],
@@ -297,8 +412,12 @@
       },
       {
         id: 'hb5',
-        name: { es: 'Azul & Nuez', en: 'Blue & Walnut' },
-        desc: { es: 'Carne 160 g, queso azul, nuez tostada, canónigos, pera.', en: '160 g beef, blue cheese, toasted walnut, lamb’s lettuce, pear.' },
+        name: { es: 'Azul & Nuez', en: 'Blue & Walnut', th: 'บลู & วอลนัต' },
+        desc: {
+          es: 'Carne 160 g, queso azul, nuez tostada, canónigos, pera.',
+          en: '160 g beef, blue cheese, toasted walnut, lamb’s lettuce, pear.',
+          th: 'เนื้อวัว 160 กรัม ชีสบลู วอลนัตอบ แลมบ์สเลททูซ และลูกแพร์.'
+        },
         price: 12.2,
         base: ['queso azul','nuez','canónigos','pera'],
         extras: [ ['miel',0.5], ['bacon',1.2] ],
@@ -306,8 +425,12 @@
       },
       {
         id: 'hb6',
-        name: { es: 'Veggie Crispy', en: 'Veggie Crispy' },
-        desc: { es: 'Heura / veggie patty, lechuga, tomate, pepinillo, vegan mayo.', en: 'Heura / veggie patty, lettuce, tomato, pickles, vegan mayo.' },
+        name: { es: 'Veggie Crispy', en: 'Veggie Crispy', th: 'เวจจี้ คริสปี้' },
+        desc: {
+          es: 'Heura / veggie patty, lechuga, tomate, pepinillo, vegan mayo.',
+          en: 'Heura / veggie patty, lettuce, tomato, pickles, vegan mayo.',
+          th: 'แพตตีจากพืช Heura/มังสวิรัติ ผักกาด มะเขือเทศ แตงกวาดอง และมายองเนสมังสวิรัติ.'
+        },
         price: 10.9,
         base: ['lechuga','tomate','pepinillo','mayo vegana'],
         extras: [ ['aguacate',1.2], ['cebolla roja',0.4] ],
@@ -315,8 +438,12 @@
       },
       {
         id: 'hb7',
-        name: { es: 'Canaria', en: 'Canarian' },
-        desc: { es: 'Carne 160 g, queso palmero, mojo suave, papa chips.', en: '160 g beef, Palmero cheese, mild mojo, crisp potato.' },
+        name: { es: 'Canaria', en: 'Canarian', th: 'คานาเรียน' },
+        desc: {
+          es: 'Carne 160 g, queso palmero, mojo suave, papa chips.',
+          en: '160 g beef, Palmero cheese, mild mojo, crisp potato.',
+          th: 'เนื้อวัว 160 กรัม ชีสปาล์เมโร โมโฆรสอ่อน และมันฝรั่งกรอบ.'
+        },
         price: 11.6,
         base: ['queso palmero','mojo suave','papa chips'],
         extras: [ ['gofio crujiente',0.6], ['cebolla',0.3] ],
@@ -324,8 +451,12 @@
       },
       {
         id: 'hb8',
-        name: { es: 'Pepper Jack', en: 'Pepper Jack' },
-        desc: { es: 'Carne 160 g, pepper jack, pepinillos, mostaza dulce.', en: '160 g beef, pepper jack, pickles, sweet mustard.' },
+        name: { es: 'Pepper Jack', en: 'Pepper Jack', th: 'เปปเปอร์แจ็ค' },
+        desc: {
+          es: 'Carne 160 g, pepper jack, pepinillos, mostaza dulce.',
+          en: '160 g beef, pepper jack, pickles, sweet mustard.',
+          th: 'เนื้อวัว 160 กรัม ชีสเปปเปอร์แจ็ค แตงกวาดอง และมัสตาร์ดหวาน.'
+        },
         price: 10.8,
         base: ['pepper jack','pepinillos','mostaza dulce'],
         extras: [ ['doble queso',1.0], ['huevo',1.1], ['bacon',1.2] ],
@@ -338,19 +469,30 @@
     const $ = s => document.querySelector(s);
     const $$ = s => Array.from(document.querySelectorAll(s));
 
-    // ===== State =====
+    const storedLang = localStorage.getItem('lang');
+    const initialLang = (storedLang && i18n[storedLang]) ? storedLang : 'es';
+
     const state = {
-      lang: localStorage.getItem('lang') || 'es',
-      cart: [] // items: {id, name, price, baseSelected:Set, extrasSelected:Set}
+      lang: initialLang,
+      cart: []
     };
+
+    document.documentElement.setAttribute('lang', state.lang);
 
     // ===== Render Helpers =====
     function renderStaticText() {
       const t = i18n[state.lang];
+      document.documentElement.setAttribute('lang', state.lang);
       $('#subtitle').textContent = t.subtitle;
       $('#heroTitle').textContent = t.heroTitle;
       $('#heroText').textContent = t.heroText;
-      const hb = $('#heroBullets'); hb.innerHTML = ''; t.heroBullets.forEach(b => { const li = document.createElement('li'); li.textContent = b; hb.appendChild(li); });
+      const hb = $('#heroBullets');
+      hb.innerHTML = '';
+      t.heroBullets.forEach(b => {
+        const li = document.createElement('li');
+        li.textContent = b;
+        hb.appendChild(li);
+      });
       $('#menuTitle').textContent = t.menuTitle;
       $('#menuHint').textContent = t.menuHint;
       $('#cartTitle').textContent = t.cartTitle;
@@ -361,29 +503,38 @@
       $('#resetBtn').textContent = t.reset;
       $('#clearCart').textContent = t.clearCart;
       $('#footerNote').textContent = t.footerNote;
-      // Tabs
       $('#tabMenuText').textContent = t.tabMenu;
       $('#tabFAQText').textContent = t.tabFAQ;
       $('#tabContactText').textContent = t.tabContact;
-      // FAQ & Contact headings
       $('#faqTitle').textContent = t.faqTitle;
       $('#contactTitle').textContent = t.contactTitle;
       $('#contactSubtitle').textContent = t.contactSubtitle;
-      $('#lblAddress').textContent = t.lblAddress; $('#lblPhone').textContent = t.lblPhone; $('#lblEmail').textContent = t.lblEmail; $('#lblHours').textContent = t.lblHours;
+      $('#lblAddress').textContent = t.lblAddress;
+      $('#lblPhone').textContent = t.lblPhone;
+      $('#lblEmail').textContent = t.lblEmail;
+      $('#lblHours').textContent = t.lblHours;
       $('#contactNote').textContent = t.contactNote;
-      // Re-render FAQ list with language
+      $('#faxTitle').textContent = t.faxTitle;
+      $('#faxSubtitle').textContent = t.faxSubtitle;
+      $('#lblFax').textContent = t.lblFax;
+      $('#lblFaxHours').textContent = t.lblFaxHours;
+      $('#faxNote').textContent = t.faxNote;
+      $('#valFaxHours').textContent = t.faxHoursValue;
+      const langLabel = $('#langSelectLabel');
+      if (langLabel) {
+        langLabel.textContent = t.langSelectLabel;
+      }
+      const langSelect = $('#langSelect');
+      if (langSelect) {
+        langSelect.value = state.lang;
+        langSelect.setAttribute('aria-label', t.langSelectLabel);
+      }
+      const themeToggle = $('#themeToggle');
+      if (themeToggle) {
+        themeToggle.setAttribute('aria-label', t.themeToggle);
+      }
+      updateThemeToggleLabel();
       renderFAQ();
-    });
-      $('#menuTitle').textContent = t.menuTitle;
-      $('#menuHint').textContent = t.menuHint;
-      $('#cartTitle').textContent = t.cartTitle;
-      $('#cartEmpty').textContent = t.cartEmpty;
-      $('#cartSubtotalLabel').textContent = t.cartSubtotalLabel;
-      $('#checkoutText').textContent = t.checkout;
-      $('#legal').textContent = t.legal;
-      $('#resetBtn').textContent = t.reset;
-      $('#clearCart').textContent = t.clearCart;
-      $('#footerNote').textContent = t.footerNote;
     }
 
     function renderMenu() {
@@ -404,7 +555,7 @@
               </div>
               <div class="text-right">
                 <div class="text-xl font-extrabold text-neutral-900" data-price> ${fmt(b.price)} </div>
-                <div class="text-xs text-neutral-500">Base</div>
+                <div class="text-xs text-neutral-500">${t.base}</div>
               </div>
             </div>
             <button class="mt-3 text-sm font-semibold text-brand-700 hover:underline" data-toggle>🔧 ${t.customize}</button>
@@ -429,13 +580,11 @@
           </div>
         `;
 
-        // build checkboxes
         const baseWrap = card.querySelector('[data-base-list]');
         const extrasWrap = card.querySelector('[data-extras-list]');
-        const selectedBase = new Set(b.base); // start included
+        const selectedBase = new Set(b.base);
         const selectedExtras = new Set();
 
-        // Base ingredients (toggle include/remove)
         b.base.forEach(ing => {
           const id = `${b.id}-b-${ing}`;
           const row = document.createElement('label');
@@ -454,7 +603,6 @@
           baseWrap.appendChild(row);
         });
 
-        // Extras (price +)
         b.extras.forEach(([ing, p]) => {
           const id = `${b.id}-e-${ing}`;
           const row = document.createElement('label');
@@ -473,16 +621,17 @@
           extrasWrap.appendChild(row);
         });
 
-        // Toggle panel
         card.querySelector('[data-toggle]').addEventListener('click', () => {
           card.querySelector('[data-panel]').classList.toggle('hidden');
         });
 
-        // Add to cart
         card.querySelector('[data-add]').addEventListener('click', (e) => {
           e.currentTarget.disabled = true;
           e.currentTarget.textContent = i18n[state.lang].added + ' ✓';
-          setTimeout(() => { e.currentTarget.disabled = false; e.currentTarget.textContent = i18n[state.lang].addToCart; }, 900);
+          setTimeout(() => {
+            e.currentTarget.disabled = false;
+            e.currentTarget.textContent = i18n[state.lang].addToCart;
+          }, 900);
 
           const priceNow = calcPrice();
           state.cart.push({
@@ -556,7 +705,6 @@
 
       $('#cartSubtotal').textContent = fmt(subtotal);
 
-      // remove handlers
       $$('#cartList [data-remove]').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const i = +e.currentTarget.getAttribute('data-remove');
@@ -566,32 +714,6 @@
       });
     }
 
-    function setLang(lang) {
-      state.lang = lang;
-      localStorage.setItem('lang', lang);
-      renderStaticText();
-      renderMenu();
-      renderCart();
-    }
-
-    // ===== Init =====
-    document.addEventListener('DOMContentLoaded', () => {
-      $('#year').textContent = new Date().getFullYear();
-      renderStaticText();
-      renderMenu();
-      renderCart();
-
-      $('#langToggle').addEventListener('click', () => setLang(state.lang === 'es' ? 'en' : 'es'));
-      $('#resetBtn').addEventListener('click', () => { localStorage.clear(); location.reload(); });
-      $('#clearCart').addEventListener('click', () => { state.cart = []; renderCart(); });
-      $('#checkoutBtn').addEventListener('click', () => {
-        const t = i18n[state.lang];
-        if (state.cart.length === 0) return alert(state.lang === 'es' ? 'Tu pedido está vacío.' : 'Your order is empty.');
-        const lines = state.cart.map((it, i) => `${i+1}. ${it.name} → ${fmt(it.price)}\n  - ${t.base}: ${it.base.join(', ') || '—'}\n  - ${t.extras}: ${it.extras.join(', ') || '—'}`).join('\n\n');
-        alert((state.lang === 'es' ? 'Resumen de pedido' : 'Order summary') + '\n\n' + lines + `\n\n${t.cartSubtotalLabel}: ${$('#cartSubtotal').textContent}`);
-      });
-    });
-      
     function renderFAQ() {
       const list = $('#faqList');
       if (!list) return;
@@ -620,12 +742,20 @@
       });
     }
 
+    function setLang(lang) {
+      if (!i18n[lang]) lang = 'es';
+      state.lang = lang;
+      localStorage.setItem('lang', lang);
+      renderStaticText();
+      renderMenu();
+      renderCart();
+    }
+
     function setActiveSection(key) {
       const sections = ['menu','faq','contact'];
       sections.forEach(s => {
         $('#section-' + s).classList.toggle('hidden', s !== key);
       });
-      // Tab styles
       $('#tabMenu').classList.toggle('bg-neutral-900', key==='menu');
       $('#tabMenu').classList.toggle('text-white', key==='menu');
       $('#tabMenu').classList.toggle('dark:bg-neutral-100', key==='menu');
@@ -643,11 +773,11 @@
       });
     }
 
-    // Theme utilities
     function applyTheme(theme) {
       if (theme === 'dark') document.documentElement.classList.add('dark');
       else document.documentElement.classList.remove('dark');
     }
+
     function initTheme() {
       const saved = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -655,45 +785,55 @@
       applyTheme(theme);
     }
 
-    // ===== Init (extended) =====
+    function currentTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+
+    function updateThemeToggleLabel() {
+      const btn = $('#themeToggle');
+      if (!btn) return;
+      const t = i18n[state.lang];
+      if (currentTheme() === 'dark') {
+        btn.textContent = `☀️ ${t.themeLight}`;
+      } else {
+        btn.textContent = `🌙 ${t.themeDark}`;
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       $('#year').textContent = new Date().getFullYear();
       initTheme();
       renderStaticText();
       renderMenu();
       renderCart();
-      renderFAQ();
 
-      // tab handlers
       $('#tabMenu').addEventListener('click', () => setActiveSection('menu'));
       $('#tabFAQ').addEventListener('click', () => setActiveSection('faq'));
       $('#tabContact').addEventListener('click', () => setActiveSection('contact'));
       setActiveSection('menu');
 
-      // language
-      $('#langToggle').addEventListener('click', () => setLang(state.lang === 'es' ? 'en' : 'es'));
-      // theme toggle
+      const langSelect = $('#langSelect');
+      if (langSelect) {
+        langSelect.value = state.lang;
+        langSelect.addEventListener('change', (e) => setLang(e.target.value));
+      }
+
       $('#themeToggle').addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        updateThemeToggleLabel();
       });
 
       $('#resetBtn').addEventListener('click', () => { localStorage.clear(); location.reload(); });
       $('#clearCart').addEventListener('click', () => { state.cart = []; renderCart(); });
       $('#checkoutBtn').addEventListener('click', () => {
         const t = i18n[state.lang];
-        if (state.cart.length === 0) return alert(state.lang === 'es' ? 'Tu pedido está vacío.' : 'Your order is empty.');
-        const lines = state.cart.map((it, i) => `${i+1}. ${it.name} → ${fmt(it.price)}
-  - ${t.base}: ${it.base.join(', ') || '—'}
-  - ${t.extras}: ${it.extras.join(', ') || '—'}`).join('
-
-');
-        alert((state.lang === 'es' ? 'Resumen de pedido' : 'Order summary') + '
-
-' + lines + `
-
-${t.cartSubtotalLabel}: ${$('#cartSubtotal').textContent}`);
+        if (state.cart.length === 0) return alert(t.emptyCartAlert);
+        const lines = state.cart.map((it, i) => `${i+1}. ${it.name} → ${fmt(it.price)}\n  - ${t.base}: ${it.base.join(', ') || '—'}\n  - ${t.extras}: ${it.extras.join(', ') || '—'}`).join('\n\n');
+        alert(`${t.orderSummaryTitle}\n\n${lines}\n\n${t.cartSubtotalLabel}: ${$('#cartSubtotal').textContent}`);
       });
+
+      updateThemeToggleLabel();
     });
   </script>
 </body>
